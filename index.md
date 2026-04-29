@@ -2,11 +2,13 @@
 
 ## Recipes
 
-<!-- Add links here as recipes are ingested -->
+- [Spaghetti Carbonara](src/content/recipes/spaghetti-carbonara.md) — Italy
+- [Lasagna Northern Italian Style](src/content/recipes/lasagna-northern-italian.md) — Italy
 
 ## Techniques
 
-<!-- Add links here as technique pages are created -->
+- [Tempering Eggs](techniques/tempering-eggs.md)
+- [Béchamel (White Sauce)](techniques/bechamel.md)
 
 ## Ingredients
 

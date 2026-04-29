@@ -17,6 +17,7 @@ Format in recipes: `[volume] ([weight])` — e.g. `250ml (250g) water`
 | Liquid | Density (g/ml) | 100ml | 500ml | 1L |
 |--------|---------------|-------|-------|-----|
 | Whole milk | 1.030 | 103g | 515g | 1.03kg |
+| Half-and-half (~10% fat) | 1.020 | 102g | 510g | 1.02kg |
 | Skimmed milk | 1.035 | 104g | 518g | 1.035kg |
 | Buttermilk | 1.030 | 103g | 515g | 1.03kg |
 | Heavy cream (35%+) | 0.990 | 99g | 495g | 990g |
