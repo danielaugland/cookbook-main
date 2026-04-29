@@ -1,0 +1,101 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ServingScaler from '../components/ServingScaler.tsx';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'recipes'>;
+}
+const { entry } = Astro.props;
+const { title, country, yield: baseYield, yieldUnit, photo, ingredients, source, tags } = entry.data;
+const { Content } = await entry.render();
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title={title}>
+  <article>
+    {photo ? (
+      <div class="photo-wrap">
+        <img src={`${base}photos/${photo}`} alt={title} />
+      </div>
+    ) : (
+      <div class="photo-placeholder">🍳</div>
+    )}
+
+    <div class="meta">
+      <h1>{title}</h1>
+      <div class="meta-row">
+        <span class="country-tag">{country}</span>
+        {tags.map(t => <span class="tag">{t}</span>)}
+      </div>
+      <p class="source-line">Source: {source}</p>
+    </div>
+
+    <ServingScaler
+      client:load
+      ingredients={ingredients}
+      baseYield={baseYield}
+      yieldUnit={yieldUnit}
+    />
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .photo-wrap {
+    margin: -1.5rem -1rem 1.5rem;
+    max-height: 380px;
+    overflow: hidden;
+  }
+  .photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-placeholder {
+    margin: -1.5rem -1rem 1.5rem;
+    height: 120px;
+    background: var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+  .meta { margin-bottom: 1.5rem; }
+  h1 { font-size: 1.75rem; line-height: 1.2; margin-bottom: 0.5rem; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.4rem; }
+  .country-tag {
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .tag {
+    background: var(--color-border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+  .source-line { font-size: 0.8rem; color: var(--color-muted); }
+
+  .prose :global(h2) {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+    margin: 1.75rem 0 0.75rem;
+  }
+  .prose :global(p) { margin-bottom: 1rem; }
+  .prose :global(ol), .prose :global(ul) {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .prose :global(li) { margin-bottom: 0.5rem; }
+</style>

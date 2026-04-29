@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchFilter from '../components/SearchFilter.tsx';
+import { getCollection } from 'astro:content';
+
+const allRecipes = await getCollection('recipes');
+const catalog = allRecipes.map(r => ({
+  slug:        r.slug,
+  title:       r.data.title,
+  country:     r.data.country,
+  tags:        r.data.tags,
+  photo:       r.data.photo,
+  ingredients: r.data.ingredients.map(i => i.item),
+}));
+
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="Browse">
+  <SearchFilter client:load catalog={catalog} base={base} />
+</BaseLayout>

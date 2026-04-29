@@ -1,0 +1,199 @@
+---
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Personal cookbook" />
+    <link rel="icon" type="image/svg+xml" href={`${base}icons/icon.svg`} />
+    <title>{title} — Cookbook</title>
+    <style is:global>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --max-width: 700px;
+        --color-bg: #faf9f7;
+        --color-text: #1a1a1a;
+        --color-muted: #666;
+        --color-accent: #c0392b;
+        --color-border: #e0ddd8;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      body {
+        background: var(--color-bg);
+        color: var(--color-text);
+        min-height: 100svh;
+      }
+      header {
+        border-bottom: 1px solid var(--color-border);
+        padding: 1rem;
+        text-align: center;
+        background: #fff;
+      }
+      header a {
+        text-decoration: none;
+        color: var(--color-accent);
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      main {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      /* ── Serving Scaler (Preact island) ── */
+      .scaler { margin-bottom: 2rem; }
+      .scaler-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+      }
+      .scaler-header h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--color-muted);
+      }
+      .scaler-control {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .scaler-control button {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid var(--color-border);
+        background: #fff;
+        font-size: 1.25rem;
+        cursor: pointer;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-accent);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .scaler-control button:active { background: var(--color-border); }
+      .scaler-control span {
+        font-weight: 600;
+        min-width: 90px;
+        text-align: center;
+        font-size: 0.95rem;
+      }
+      .ingredient-list { list-style: none; }
+      .ingredient-list li {
+        display: flex;
+        gap: 1rem;
+        padding: 0.55rem 0;
+        border-bottom: 1px solid var(--color-border);
+        font-size: 1rem;
+      }
+      .ingredient-list .amount {
+        font-weight: 600;
+        min-width: 110px;
+        flex-shrink: 0;
+        color: var(--color-accent);
+      }
+
+      /* ── Search & Filter (Preact island) ── */
+      .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+      .search-input,
+      .country-select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        font-size: 1rem;
+        background: #fff;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      .search-input:focus,
+      .country-select:focus {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 1px;
+      }
+      .results-count {
+        color: var(--color-muted);
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+      }
+      .recipe-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      @media (min-width: 480px) {
+        .recipe-grid { grid-template-columns: 1fr 1fr; }
+      }
+      .recipe-card {
+        text-decoration: none;
+        color: inherit;
+        border: 1px solid var(--color-border);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+        display: block;
+        transition: box-shadow 0.15s;
+      }
+      .recipe-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.1); }
+      .recipe-card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        display: block;
+      }
+      .card-no-photo {
+        height: 80px;
+        background: var(--color-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+      }
+      .card-body { padding: 0.75rem; }
+      .card-body h2 { font-size: 1rem; margin-bottom: 0.35rem; line-height: 1.3; }
+      .card-country {
+        display: inline-block;
+        background: var(--color-accent);
+        color: #fff;
+        padding: 0.15rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+      .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--color-muted);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href={base}>My Cookbook</a>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
